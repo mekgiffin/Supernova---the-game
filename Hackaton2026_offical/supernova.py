@@ -6,7 +6,7 @@ screen = pygame.display.set_mode(screenSize)
 pygame.display.toggle_fullscreen()
 clock = pygame.time.Clock()
 
-DEBUG_HITBOXES = False 
+DEBUG_HITBOXES = True
 
 backgroundStorage2048x1024 = pygame.image.load("Images/backgroundStorage.png").convert_alpha()
 single64x64Block = pygame.image.load("Images/single64x64Block.png").convert_alpha()
@@ -14,6 +14,7 @@ single128x64Block = pygame.transform.scale(single64x64Block, (128, 64))
 single64x128Block = pygame.transform.scale(single64x64Block, (64, 128))
 floor256x64 = pygame.image.load("Images/floor256x64.png").convert_alpha()
 floor256x64Flipped = pygame.transform.flip(floor256x64, True, False)
+floor256x64Flipped = pygame.transform.scale(floor256x64Flipped, (192,64))
 floor256x64 = pygame.transform.scale(floor256x64, (192, 64))
 exit = pygame.image.load("Images/exit.png").convert_alpha()
 exit = pygame.transform.scale(exit, (198, 256))
@@ -75,7 +76,7 @@ level0 = [[64, 896],
            [wallStorage64x1024, pygame.Rect(2048, 0, 64, 1024)],
            [ceil2176x64, pygame.Rect(-64, -64, 2176, 64)],
            [floor256x64, pygame.Rect(0, 960, 192, 64)],
-           [floor256x64Flipped, pygame.Rect(1792, 960, 192, 64)],
+           [floor256x64Flipped, pygame.Rect(1856, 960, 192, 64)],
            [single128x64Block, pygame.Rect((64*8), (64*12), 128, 64)],
            [single64x64Block, pygame.Rect((64*8), (64*13), 64, 64)],
            [single64x128Block, pygame.Rect((64*6), (64*3), 64, 128)],
@@ -86,7 +87,7 @@ level0 = [[64, 896],
            [single64x128Block, pygame.Rect((64*16), (64*0), 64, 128)],
            [single64x128Block, pygame.Rect((64*16), (64*2), 64, 128)],
            [single64x64Block, pygame.Rect((64*22), (64*4), 64, 64)],
-           [single128x64Block, pygame.Rect((64*7), (64*4), 64, 64)],
+           [single128x64Block, pygame.Rect((64*7), (64*4), 128, 64)],
            [single64x64Block, pygame.Rect((64*9), (64*4), 64, 64)]],
           [[single128x64Block, pygame.Rect((64*11), (64*9), 128, 64), 512, 2]],
           [[spikeBackLeft, spikeBackLeft.get_rect(topleft=((64*0), (64*11)))],
@@ -98,16 +99,16 @@ level0 = [[64, 896],
            [spike, spike.get_rect(topleft=((64*7), (64*4)-8))],
            [spike, spike.get_rect(topleft=((64*8), (64*4)-8))],
            [spike, spike.get_rect(topleft=((64*9), (64*4)-8))],
-           [spike, spike.get_rect(topleft=((64*10), (64*3)-8))]]]
+           [spike, spike.get_rect(topleft=((64*10), (64*3)-8))],
+           [spikeBackTop, spike.get_rect(topleft=((64*6), (64*5)))],
+           [spikeBackTop, spike.get_rect(topleft=((64*13), (64*0)))]]]
 
 
-exitX, exitY = 64*29, 32*1
+exitX, exitY = 64*29, 64*0
 decor = [[exit, pygame.Rect(exitX, exitY, 198, 256)]]
 
-# (x, y, w, h) relative to the exit image's top-left corner.
-# These are PLACEHOLDERS: tune them until the red outlines hug the solid part of the L.
 exitParts = [(-1000, -10000, 100, 256),      # the tall bar
-             (100, 156, 98, 100)]   # the foot of the L
+             (32, 224, 192, 32)]   # the foot of the L
 for x, y, w, h in exitParts:
     level0[1].append([None, pygame.Rect(exitX + x, exitY + y, w, h)])
 
